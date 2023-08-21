@@ -17,3 +17,7 @@ const connectToDb = async () => {
   }
 };
 connectToDb();
+
+app.get('/', (req, res) => {
+  res.json({ msg: 'Hello World!' });
+});
