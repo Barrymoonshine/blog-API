@@ -16,7 +16,7 @@ const blogsSchema = new Schema({
     required: true,
   },
   tags: {
-    type: String,
+    type: [],
     required: true,
   },
   picture: {
