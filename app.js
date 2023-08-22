@@ -1,6 +1,7 @@
 import express from 'express';
 import 'dotenv/config';
 import mongoose from 'mongoose';
+import blogRoutes from './routes/blogRoutes.js';
 
 const app = express();
 
@@ -17,6 +18,10 @@ const connectToDb = async () => {
   }
 };
 connectToDb();
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use('/blogs', blogRoutes);
 
 app.get('/', (req, res) => {
   res.json({ msg: 'Hello World!' });

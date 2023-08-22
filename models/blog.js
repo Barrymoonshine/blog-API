@@ -21,11 +21,9 @@ const blogsSchema = new Schema({
   },
   picture: {
     type: String,
-    required: true,
   },
   likes: {
     type: Number,
-    required: true,
   },
 });
 
