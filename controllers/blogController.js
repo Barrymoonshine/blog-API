@@ -17,7 +17,6 @@ export const get_all_blogs = async (req, res) => {
 
 export const create_blog = async (req, res) => {
   try {
-    console.log('req.body', req.body);
     const blog = new Blog({
       ...req.body,
     });
@@ -25,6 +24,26 @@ export const create_blog = async (req, res) => {
     res.json({
       message: 'Success, blog saved!',
       blog,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const get_single_blog = async (req, res) => {
+  try {
+    const blog = await Blog.findById(req.params.id);
+    res.send(blog);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const delete_blog = async (req, res) => {
+  try {
+    await Blog.findByIdAndDelete(req.params.id);
+    res.status(200).json({
+      message: `Blog ${req.params.id} deleted`,
     });
   } catch (err) {
     console.log(err);

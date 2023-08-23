@@ -16,7 +16,7 @@ const blogsSchema = new Schema({
     required: true,
   },
   tags: {
-    type: [],
+    type: [String],
     required: true,
   },
   picture: {
@@ -27,6 +27,6 @@ const blogsSchema = new Schema({
   },
 });
 
-const Blog = mongoose.model('Posts', blogsSchema);
+const Blog = mongoose.model('Blogs', blogsSchema);
 
 export default Blog;
