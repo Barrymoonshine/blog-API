@@ -15,11 +15,11 @@ const blogsSchema = new Schema({
     type: String,
     required: true,
   },
-  tags: {
-    type: [String],
+  area: {
+    type: String,
     required: true,
   },
-  picture: {
+  image: {
     type: String,
   },
   likes: {
