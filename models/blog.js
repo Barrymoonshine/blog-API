@@ -15,7 +15,7 @@ const blogsSchema = new Schema({
     type: String,
     required: true,
   },
-  area: {
+  region: {
     type: String,
     required: true,
   },
