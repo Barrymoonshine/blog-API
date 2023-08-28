@@ -8,7 +8,8 @@ export const get_all_blogs = async (req, res) => {
     res.status(500).json({
       error: {
         code: 'INTERNAL_SERVER_ERROR',
-        message: 'An internal server error occurred when loading the page.',
+        message:
+          'An internal server error occurred when sending your request, please try again or report issue to site maintainer.',
         err,
       },
     });
@@ -21,12 +22,16 @@ export const create_blog = async (req, res) => {
       ...req.body,
     });
     await blog.save();
-    res.json({
-      message: 'Success, blog saved!',
-      blog,
-    });
+    res.json('Success, blog saved!');
   } catch (err) {
-    console.log(err);
+    res.status(500).json({
+      error: {
+        code: 'INTERNAL_SERVER_ERROR',
+        message:
+          'An internal server error occurred when sending your request, please try again or report issue to site maintainer.',
+        err,
+      },
+    });
   }
 };
 
