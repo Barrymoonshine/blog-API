@@ -9,7 +9,7 @@ export const get_all_blogs = async (req, res) => {
       error: {
         code: 'INTERNAL_SERVER_ERROR',
         message:
-          'An internal server error occurred when sending your request, please try again or report issue to site maintainer.',
+          'An internal server error occurred when sending your request, please try again or report the issue to site maintainer.',
         err,
       },
     });
@@ -20,6 +20,7 @@ export const create_blog = async (req, res) => {
   try {
     const blog = new Blog({
       ...req.body,
+      image: req.file.path,
     });
     await blog.save();
     res.json('Success, blog saved!');
@@ -28,7 +29,7 @@ export const create_blog = async (req, res) => {
       error: {
         code: 'INTERNAL_SERVER_ERROR',
         message:
-          'An internal server error occurred when sending your request, please try again or report issue to site maintainer.',
+          'An internal server error occurred when sending your request, please try again or report the issue to site maintainer.',
         err,
       },
     });
