@@ -3,6 +3,7 @@ import 'dotenv/config';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import blogRoutes from './routes/blogRoutes.js';
+import userRoutes from './routes/userRoutes.js';
 
 const app = express();
 
@@ -30,6 +31,7 @@ app.use(
   })
 );
 app.use('/blogs', blogRoutes);
+app.use('/user', userRoutes);
 
 app.get('/', (req, res) => {
   res.json({ msg: 'Hello World!' });
