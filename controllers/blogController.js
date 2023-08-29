@@ -18,6 +18,7 @@ export const get_all_blogs = async (req, res) => {
 
 export const create_blog = async (req, res) => {
   try {
+    // Get the author from the JWT?
     const blog = new Blog({
       ...req.body,
       image: req.file.path,
