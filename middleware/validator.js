@@ -1,6 +1,6 @@
 import { check, validationResult } from 'express-validator';
 
-const createFormValidation = () => [
+export const createFormValidation = () => [
   check('title').isString().notEmpty().withMessage('Please enter a title'),
   check('caption').isString().notEmpty().withMessage('Please enter a caption'),
   check('content')
@@ -10,12 +10,32 @@ const createFormValidation = () => [
   check('region').isString().notEmpty().withMessage('Please select the region'),
 ];
 
-const validate = (req, res, next) => {
+export const registerFormValidation = () => [
+  check('username')
+    .isString()
+    .notEmpty()
+    .withMessage('Please enter a username'),
+  check('password')
+    .isString()
+    .notEmpty()
+    .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,20}$/)
+    .withMessage('Please enter a valid password'),
+  check('confirmPassword')
+    .isString()
+    .notEmpty()
+    .custom((value, { req }) => {
+      if (value === req.body.password) {
+        return true;
+      }
+      return false;
+    })
+    .withMessage('Passwords do not match'),
+];
+
+export const validate = (req, res, next) => {
   const errors = validationResult(req);
   if (errors.isEmpty()) {
     return next();
   }
   return res.status(422).json(errors.array());
 };
-
-export { createFormValidation, validate };
