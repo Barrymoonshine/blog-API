@@ -33,13 +33,16 @@ export const user_register = async (req, res) => {
 
 export const user_log_in = async (req, res) => {
   try {
+    if (!req.body.username || !req.body.password) {
+      return res.json('Please complete all fields');
+    }
     const user = await User.findOne({ username: req.body.username });
     if (!user) {
-      res.json('Incorrect username in');
+      return res.json('Incorrect username');
     }
     const match = await bcrypt.compare(req.body.password, user.password);
     if (!match) {
-      res.json('Incorrect username in');
+      return res.json('Incorrect password');
     }
     const token = createToken(user._id);
     res.json({ token });
