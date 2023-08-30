@@ -6,13 +6,7 @@ const routes = express.Router();
 
 routes.post('/register', user_register);
 
-routes.post('/log-in', registerFormValidation(), validate, user_log_in);
-
-//   passport.authenticate('local', {
-//     successRedirect: '/',
-//     failureRedirect: '/user/log-in',
-//     failureMessage: true,
-//   })
+routes.post('/log-in', user_log_in);
 
 // Later routes to be added
 
