@@ -1,17 +1,24 @@
 import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 import User from '../models/user.js';
+
+const createToken = (_id) =>
+  jwt.sign({ _id }, process.env.SECRET_KEY, { expiresIn: '1d' });
 
 export const user_register = async (req, res) => {
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
-    // Membership status initially false, as users must become members via the join-us view
-    const user = new User({
+    // Admin status initially false, as users must become members via the join-us view
+    const newUser = new User({
       ...req.body,
       password: hashedPassword,
       isAdmin: false,
     });
-    await user.save();
-    res.json('Success, thank you for creating an account!');
+    const user = await newUser.save();
+
+    const token = createToken(user._id);
+
+    res.json({ token });
   } catch (err) {
     res.status(500).json({
       error: {

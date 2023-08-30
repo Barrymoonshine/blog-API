@@ -1,11 +1,12 @@
 import express from 'express';
 import { user_register, user_log_in } from '../controllers/userController.js';
+import { registerFormValidation, validate } from '../middleware/validator.js';
 
 const routes = express.Router();
 
 routes.post('/register', user_register);
 
-routes.post('/log-in', user_log_in);
+routes.post('/log-in', registerFormValidation(), validate, user_log_in);
 
 //   passport.authenticate('local', {
 //     successRedirect: '/',
