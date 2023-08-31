@@ -5,7 +5,7 @@ import User from '../models/user.js';
 const createToken = (_id) =>
   jwt.sign({ _id }, process.env.SECRET_KEY, { expiresIn: '1d' });
 
-export const user_register = async (req, res) => {
+export const user_sign_up = async (req, res) => {
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
     // Admin status initially false, as users must become members via the join-us view

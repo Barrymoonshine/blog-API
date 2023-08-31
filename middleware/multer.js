@@ -12,18 +12,14 @@ const storage = new CloudinaryStorage({
   cloudinary,
 });
 
-// Back-end validation on file type
 const fileFilter = (req, file, cb) => {
   if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
-    // Accept
     cb(null, true);
   } else {
-    // Reject
     cb(null, false);
   }
 };
 
-// Only accept files up to 5MB
 const upload = multer({
   storage,
   limits: { fileSize: 1024 * 1024 * 5 },

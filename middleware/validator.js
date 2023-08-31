@@ -10,7 +10,7 @@ export const createFormValidation = () => [
   check('region').isString().notEmpty().withMessage('Please select the region'),
 ];
 
-export const registerFormValidation = () => [
+export const usernamePasswordValidation = () => [
   check('username')
     .isString()
     .notEmpty()
@@ -20,6 +20,9 @@ export const registerFormValidation = () => [
     .notEmpty()
     .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,20}$/)
     .withMessage('Please enter a valid password'),
+];
+
+export const confPasswordValidation = () => [
   check('confirmPassword')
     .isString()
     .notEmpty()
