@@ -2,28 +2,21 @@ import mongoose from 'mongoose';
 
 const { Schema } = mongoose;
 
-const blogsSchema = new Schema(
+const commentsSchema = new Schema(
   {
-    title: {
+    blogID: {
       type: String,
       required: true,
     },
-    caption: {
+    username: {
       type: String,
       required: true,
     },
-    content: {
+    comment: {
       type: String,
       required: true,
     },
-    region: {
-      type: String,
-      required: true,
-    },
-    author: {
-      type: String,
-    },
-    image: {
+    date: {
       type: String,
       required: true,
     },
@@ -34,6 +27,6 @@ const blogsSchema = new Schema(
   { timestamps: true }
 );
 
-const Blog = mongoose.model('Blogs', blogsSchema);
+const Comment = mongoose.model('Comments', commentsSchema);
 
-export default Blog;
+export default Comment;
