@@ -35,6 +35,13 @@ export const confPasswordValidation = () => [
     .withMessage('Passwords do not match'),
 ];
 
+export const commentFormValidation = () => [
+  check('comment')
+    .isString()
+    .notEmpty()
+    .withMessage('Please provide a comment'),
+];
+
 export const validate = (req, res, next) => {
   const errors = validationResult(req);
   if (errors.isEmpty()) {

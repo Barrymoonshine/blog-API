@@ -18,17 +18,14 @@ export const get_all_blogs = async (req, res) => {
 
 export const create_blog = async (req, res) => {
   try {
-    console.log('create_blog called ');
     // Get the author from the JWT?
     const blog = new Blog({
       ...req.body,
       image: req.file.path,
     });
-    console.log('blog', blog);
     await blog.save();
     res.json('Success, blog saved!');
   } catch (err) {
-    console.log('create_blog called and there was an error ');
     res.status(500).json({
       error: {
         code: 'INTERNAL_SERVER_ERROR',
