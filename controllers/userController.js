@@ -57,3 +57,15 @@ export const user_log_in = async (req, res) => {
     });
   }
 };
+
+export const user_authenticate = async (req, res) => {
+  try {
+    res.status(200).json('Success, user token verified');
+  } catch (err) {
+    res
+      .status(500)
+      .json(
+        'An internal server error occurred when sending your request, please try again or report the issue to site maintainer.'
+      );
+  }
+};

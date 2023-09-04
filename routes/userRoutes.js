@@ -1,12 +1,19 @@
 import express from 'express';
-import { user_sign_up, user_log_in } from '../controllers/userController.js';
+import {
+  user_authenticate,
+  user_sign_up,
+  user_log_in,
+} from '../controllers/userController.js';
 import {
   usernamePasswordValidation,
   confPasswordValidation,
   validate,
 } from '../middleware/validator.js';
+import verifyToken from '../middleware/verifyToken.js';
 
 const routes = express.Router();
+
+routes.get('/authenticate', verifyToken, user_authenticate);
 
 routes.post(
   '/sign-up',
