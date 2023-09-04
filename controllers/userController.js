@@ -34,7 +34,13 @@ export const user_sign_up = async (req, res) => {
 export const user_log_in = async (req, res) => {
   try {
     const token = createToken(req.user._id);
-    res.json({ token });
+    res
+      .cookie('token', token, {
+        httpOnly: true,
+        sameSite: 'strict',
+        secure: true,
+      })
+      .json('success token added to cookie');
   } catch (err) {
     res.status(500).json({
       error: {
