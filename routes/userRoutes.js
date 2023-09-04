@@ -10,6 +10,7 @@ import {
   validate,
 } from '../middleware/validator.js';
 import verifyToken from '../middleware/verifyToken.js';
+import verifyCredentials from '../middleware/verifyCredentials.js';
 
 const routes = express.Router();
 
@@ -23,7 +24,13 @@ routes.post(
   user_sign_up
 );
 
-routes.post('/log-in', usernamePasswordValidation(), validate, user_log_in);
+routes.post(
+  '/log-in',
+  usernamePasswordValidation(),
+  validate,
+  verifyCredentials,
+  user_log_in
+);
 
 // Later routes to be added
 
