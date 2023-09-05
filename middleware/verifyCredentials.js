@@ -15,7 +15,7 @@ const verifyCredentials = async (req, res, next) => {
       return res.json('Incorrect password');
     }
     if (match) {
-      // Attach user to the request object
+      // Attach user to the request object for user in userController
       req.user = user;
       next();
     }

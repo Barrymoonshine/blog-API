@@ -1,7 +1,6 @@
 import express from 'express';
 import 'dotenv/config';
 import mongoose from 'mongoose';
-import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import blogRoutes from './routes/blogRoutes.js';
 import userRoutes from './routes/userRoutes.js';
@@ -24,7 +23,6 @@ const connectToDb = async () => {
 connectToDb();
 
 app.use(express.json());
-app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use(
   cors({

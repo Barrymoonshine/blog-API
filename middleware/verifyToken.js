@@ -2,9 +2,9 @@ import jwt from 'jsonwebtoken';
 
 const verifyToken = (req, res, next) => {
   // Get auth header value
-  const { token } = req.cookies;
+  const bearerHeader = req.headers.authorization;
   // Check if undefined
-  if (typeof token === 'undefined') {
+  if (typeof bearerHeader === 'undefined') {
     // Forbidden, 403 status is not authorised
     res
       .status(403)
@@ -12,7 +12,12 @@ const verifyToken = (req, res, next) => {
         'Access denied, no authorisation details provided. Please log in or sign up to continue'
       );
   } else {
-    jwt.verify(token, process.env.SECRET_KEY, (err) => {
+    // Split at the space
+    const bearer = bearerHeader.split(' ');
+    // Get token from array
+    const bearerToken = bearer[1];
+    // Verify the token
+    jwt.verify(bearerToken, process.env.SECRET_KEY, (err) => {
       if (err) {
         res
           .status(403)

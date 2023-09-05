@@ -5,6 +5,8 @@ import User from '../models/user.js';
 const createToken = (_id) =>
   jwt.sign({ _id }, process.env.SECRET_KEY, { expiresIn: '1d' });
 
+const tomorrow = new Date(Date.now() + 24 * 60 * 60 * 1000);
+
 export const user_sign_up = async (req, res) => {
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
@@ -34,13 +36,7 @@ export const user_sign_up = async (req, res) => {
 export const user_log_in = async (req, res) => {
   try {
     const token = createToken(req.user._id);
-    res
-      .cookie('token', token, {
-        httpOnly: true,
-        sameSite: 'strict',
-        secure: true,
-      })
-      .json('success token added to cookie');
+    res.json({ token });
   } catch (err) {
     res.status(500).json({
       error: {
