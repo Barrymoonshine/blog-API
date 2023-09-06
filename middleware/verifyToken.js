@@ -17,7 +17,7 @@ const verifyToken = (req, res, next) => {
     // Get token from array
     const bearerToken = bearer[1];
     // Verify the token
-    jwt.verify(bearerToken, process.env.SECRET_KEY, (err) => {
+    jwt.verify(bearerToken, process.env.SECRET_KEY, (err, decoded) => {
       if (err) {
         res
           .status(403)
@@ -25,6 +25,8 @@ const verifyToken = (req, res, next) => {
             'Your request was not authorised, please log in or sign up to continue'
           );
       } else {
+        // Attach the decoded user to the request object for use in userController
+        req.user = decoded;
         // Next
         next();
       }

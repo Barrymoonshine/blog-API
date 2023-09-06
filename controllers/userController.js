@@ -5,8 +5,6 @@ import User from '../models/user.js';
 const createToken = (_id) =>
   jwt.sign({ _id }, process.env.SECRET_KEY, { expiresIn: '1d' });
 
-const tomorrow = new Date(Date.now() + 24 * 60 * 60 * 1000);
-
 export const user_sign_up = async (req, res) => {
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
@@ -17,7 +15,7 @@ export const user_sign_up = async (req, res) => {
       isAdmin: false,
     });
     const user = await newUser.save();
-
+    // Does token need to be returned as an object?
     const token = createToken(user._id);
 
     res.json({ token });
@@ -36,6 +34,7 @@ export const user_sign_up = async (req, res) => {
 export const user_log_in = async (req, res) => {
   try {
     const token = createToken(req.user._id);
+    // Does token need to be returned as an object?
     res.json({ token });
   } catch (err) {
     res.status(500).json({
@@ -51,7 +50,10 @@ export const user_log_in = async (req, res) => {
 
 export const user_authenticate = async (req, res) => {
   try {
-    res.status(200).json('Success, user token verified');
+    const user = await User.find({ _id: req.user._id });
+    // MDB returns the user data in an array
+    const { username } = user[0];
+    res.json(username);
   } catch (err) {
     res
       .status(500)
