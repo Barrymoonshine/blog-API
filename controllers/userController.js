@@ -10,7 +10,7 @@ const tomorrow = new Date(Date.now() + 24 * 60 * 60 * 1000);
 export const user_sign_up = async (req, res) => {
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
-    // Admin status initially false, as users must become members via the join-us view
+    // Admin status initially false
     const newUser = new User({
       ...req.body,
       password: hashedPassword,
