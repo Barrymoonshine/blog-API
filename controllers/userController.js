@@ -50,10 +50,7 @@ export const user_log_in = async (req, res) => {
 
 export const user_authenticate = async (req, res) => {
   try {
-    const user = await User.find({ _id: req.user._id });
-    // MDB returns the user data in an array
-    const { username } = user[0];
-    res.json(username);
+    res.status(200).json('User authenticated');
   } catch (err) {
     res
       .status(500)

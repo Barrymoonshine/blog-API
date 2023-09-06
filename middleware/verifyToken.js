@@ -25,8 +25,6 @@ const verifyToken = (req, res, next) => {
             'Your request was not authorised, please log in or sign up to continue'
           );
       } else {
-        // Attach the decoded user to the request object for use in userController
-        req.user = decoded;
         // Next
         next();
       }

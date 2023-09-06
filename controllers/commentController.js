@@ -36,3 +36,20 @@ export const get_blog_comments = async (req, res) => {
     });
   }
 };
+
+export const delete_comment = async (req, res) => {
+  try {
+    const { id } = req.params;
+    await Comment.findByIdAndDelete(id);
+    res.status(200).json('Success, comment deleted ');
+  } catch (err) {
+    res.status(500).json({
+      error: {
+        code: 'INTERNAL_SERVER_ERROR',
+        message:
+          'This is an error, please fix error messages across the back-end!',
+        err,
+      },
+    });
+  }
+};

@@ -2,6 +2,7 @@ import { Router } from 'express';
 import {
   create_comment,
   get_blog_comments,
+  delete_comment,
 } from '../controllers/commentController.js';
 import { commentFormValidation, validate } from '../middleware/validator.js';
 import verifyToken from '../middleware/verifyToken.js';
@@ -16,6 +17,10 @@ router.post(
   create_comment
 );
 
-router.get('/:id', verifyToken, get_blog_comments);
+// Get blog comment route not protected as user can view comments without being logged in
+router.get('/:id', get_blog_comments);
+
+// Get blog comment route not protected as user can view comments without being logged in
+router.delete('/delete/:id', verifyToken, delete_comment);
 
 export default router;
