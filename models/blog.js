@@ -28,7 +28,7 @@ const blogsSchema = new Schema(
       required: true,
     },
     likes: {
-      type: Number,
+      type: [],
     },
   },
   { timestamps: true }

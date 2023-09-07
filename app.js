@@ -27,7 +27,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(
   cors({
     origin: ['http://localhost:5173', 'http://localhost:3000'],
-    methods: ['POST', 'GET', 'DELETE', 'PUT'],
+    methods: ['POST', 'GET', 'DELETE', 'PUT', 'PATCH'],
     allowedHeaders: ['Content-Type', 'Authorization'],
   })
 );

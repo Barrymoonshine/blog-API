@@ -55,3 +55,14 @@ export const delete_blog = async (req, res) => {
     console.log(err);
   }
 };
+
+export const like_blog = async (req, res) => {
+  try {
+    const blog = await Blog.findById(req.params.id);
+    blog.likes.push(req.body.username);
+    await blog.save();
+    res.status(200).json(blog);
+  } catch (err) {
+    console.log(err);
+  }
+};

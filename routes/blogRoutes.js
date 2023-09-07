@@ -4,9 +4,14 @@ import {
   create_blog,
   get_single_blog,
   delete_blog,
+  like_blog,
 } from '../controllers/blogController.js';
 import upload from '../middleware/multer.js';
-import { createFormValidation, validate } from '../middleware/validator.js';
+import {
+  createFormValidation,
+  likeFormValidation,
+  validate,
+} from '../middleware/validator.js';
 import verifyToken from '../middleware/verifyToken.js';
 
 const router = Router();
@@ -25,5 +30,13 @@ router.post(
 router.get('/:id', verifyToken, get_single_blog);
 
 router.delete('/:id', verifyToken, delete_blog);
+
+router.patch(
+  '/like/:id',
+  verifyToken,
+  likeFormValidation(),
+  validate,
+  like_blog
+);
 
 export default router;

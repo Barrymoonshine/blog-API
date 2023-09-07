@@ -42,6 +42,13 @@ export const commentFormValidation = () => [
     .withMessage('Please provide a comment'),
 ];
 
+export const likeFormValidation = () => [
+  check('username')
+    .isString()
+    .notEmpty()
+    .withMessage('Please log in to like this blog '),
+];
+
 export const validate = (req, res, next) => {
   const errors = validationResult(req);
   if (errors.isEmpty()) {
