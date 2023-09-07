@@ -4,6 +4,10 @@ const { Schema } = mongoose;
 
 const commentsSchema = new Schema(
   {
+    commentID: {
+      type: String,
+      required: true,
+    },
     blogID: {
       type: String,
       required: true,
@@ -13,6 +17,10 @@ const commentsSchema = new Schema(
       required: true,
     },
     comment: {
+      type: String,
+      required: true,
+    },
+    date: {
       type: String,
       required: true,
     },

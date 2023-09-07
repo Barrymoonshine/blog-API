@@ -40,7 +40,7 @@ export const get_blog_comments = async (req, res) => {
 export const delete_comment = async (req, res) => {
   try {
     const { id } = req.params;
-    await Comment.findByIdAndDelete(id);
+    await Comment.findOneAndDelete({ commentID: id });
     res.status(200).json('Success, comment deleted ');
   } catch (err) {
     res.status(500).json({
