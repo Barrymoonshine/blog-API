@@ -17,7 +17,7 @@ const verifyToken = (req, res, next) => {
     // Get token from array
     const bearerToken = bearer[1];
     // Verify the token
-    jwt.verify(bearerToken, process.env.SECRET_KEY, (err, decoded) => {
+    jwt.verify(bearerToken, process.env.SECRET_KEY, (err) => {
       if (err) {
         res
           .status(403)

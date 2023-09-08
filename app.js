@@ -5,6 +5,7 @@ import cors from 'cors';
 import blogRoutes from './routes/blogRoutes.js';
 import userRoutes from './routes/userRoutes.js';
 import commentRoutes from './routes/commentRoutes.js';
+import likeRoutes from './routes/likeRoutes.js';
 
 const app = express();
 
@@ -34,3 +35,4 @@ app.use(
 app.use('/blogs', blogRoutes);
 app.use('/user', userRoutes);
 app.use('/comments', commentRoutes);
+app.use('/like', likeRoutes);

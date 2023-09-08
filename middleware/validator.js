@@ -49,6 +49,28 @@ export const likeFormValidation = () => [
     .withMessage('Please log in to like this blog '),
 ];
 
+export const likeBlogValidation = () => [
+  check('username')
+    .isString()
+    .notEmpty()
+    .withMessage('Please provide a username to like this blog '),
+  check('blogID')
+    .isString()
+    .notEmpty()
+    .withMessage('Please provide the blog ID to like this blog  '),
+];
+
+export const likeCommentValidation = () => [
+  check('username')
+    .isString()
+    .notEmpty()
+    .withMessage('Please provide a username to like this comment '),
+  check('commentID')
+    .isString()
+    .notEmpty()
+    .withMessage('Please provide the comment ID to like this blog  '),
+];
+
 export const validate = (req, res, next) => {
   const errors = validationResult(req);
   if (errors.isEmpty()) {
