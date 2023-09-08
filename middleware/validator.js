@@ -60,15 +60,19 @@ export const likeBlogValidation = () => [
     .withMessage('Please provide the blog ID to like this blog  '),
 ];
 
-export const likeCommentValidation = () => [
+export const likeValidation = () => [
   check('username')
     .isString()
     .notEmpty()
-    .withMessage('Please provide a username to like this comment '),
-  check('commentID')
+    .withMessage('Please provide a username'),
+  check('docType')
     .isString()
     .notEmpty()
-    .withMessage('Please provide the comment ID to like this blog  '),
+    .withMessage('Please provide the document type'),
+  check('docID')
+    .isString()
+    .notEmpty()
+    .withMessage('Please provide the document ID'),
 ];
 
 export const validate = (req, res, next) => {
