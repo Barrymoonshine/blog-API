@@ -1,5 +1,9 @@
 import { Router } from 'express';
-import { like_blog, like_comment } from '../controllers/likeController.js';
+import {
+  get_all_likes,
+  like_blog,
+  like_comment,
+} from '../controllers/likeController.js';
 import verifyToken from '../middleware/verifyToken.js';
 import {
   likeBlogValidation,
@@ -12,6 +16,8 @@ import {
 } from '../middleware/checkDuplicateLike.js';
 
 const router = Router();
+
+router.get('/', get_all_likes);
 
 router.patch(
   '/blog',
