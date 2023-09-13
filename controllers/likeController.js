@@ -3,7 +3,7 @@ import Like from '../models/like.js';
 export const get_all_likes = async (req, res) => {
   try {
     const likes = await Like.find();
-    res.send(likes);
+    res.json(likes);
   } catch (err) {
     res.status(500).json({
       error: {
@@ -20,7 +20,8 @@ export const like_doc = async (req, res) => {
   try {
     const like = new Like(req.body);
     await like.save();
-    res.json(like);
+    const likes = await Like.find();
+    res.json(likes);
   } catch (err) {
     res.status(500).json({
       error: {

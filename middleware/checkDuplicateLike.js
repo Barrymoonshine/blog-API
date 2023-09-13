@@ -6,10 +6,18 @@ const checkDuplicateLike = async (req, res, next) => {
   const isDocLiked = await Like.findOne({ docID, username });
 
   if (isDocLiked) {
-    return res.status(400).json({ error: 'Already liked' });
+    try {
+      await Like.deleteOne({ docID, username });
+      const likes = await Like.find();
+      res.json(likes);
+    } catch (err) {
+      res
+        .status(500)
+        .json({ error: 'Internal Server Error', errorDetails: err });
+    }
+  } else {
+    next();
   }
-
-  next();
 };
 
 export default checkDuplicateLike;
