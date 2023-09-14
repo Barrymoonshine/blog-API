@@ -4,15 +4,15 @@ import User from '../models/user.js';
 const verifyCredentials = async (req, res, next) => {
   try {
     if (!req.body.username || !req.body.password) {
-      return res.json('Please complete all fields');
+      return res.status(401).json('Please complete all fields');
     }
     const user = await User.findOne({ username: req.body.username });
     if (!user) {
-      return res.json('Incorrect username');
+      return res.status(401).json('Username not valid');
     }
     const match = await bcrypt.compare(req.body.password, user.password);
     if (!match) {
-      return res.json('Incorrect password');
+      return res.status(401).json('Password not valid');
     }
     if (match) {
       // Attach user to the request object for use in userController to save another call to the DB
