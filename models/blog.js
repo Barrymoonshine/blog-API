@@ -22,6 +22,7 @@ const blogsSchema = new Schema(
     },
     author: {
       type: String,
+      required: true,
     },
     image: {
       type: String,

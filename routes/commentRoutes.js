@@ -14,12 +14,12 @@ router.post(
   verifyToken,
   commentFormValidation(),
   validate,
-  create_comment
+  create_comment,
 );
 
 // Get blog comment route not protected as user can view comments without being logged in
 router.get('/:id', get_blog_comments);
 
-router.delete('/delete/:id', verifyToken, delete_comment);
+router.delete('/:id', verifyToken, delete_comment);
 
 export default router;

@@ -9,9 +9,9 @@ const checkDuplicateUsername = async (req, res, next) => {
     // No existing entry for user, not duplicate
     return next();
   }
-  return res.status(400).json({
-    error: 'This username is already taken, please provide another username',
-  });
+  return res
+    .status(400)
+    .json('This username is already taken, please provide another username');
 };
 
 export default checkDuplicateUsername;
