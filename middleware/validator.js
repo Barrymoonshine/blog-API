@@ -75,6 +75,29 @@ export const likeValidation = () => [
     .withMessage('Please provide the document ID'),
 ];
 
+export const updatePasswordValidation = () => [
+  check('password')
+    .isString()
+    .notEmpty()
+    .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,20}$/)
+    .withMessage('Please enter a valid password'),
+  check('newPassword')
+    .isString()
+    .notEmpty()
+    .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,20}$/)
+    .withMessage('Please enter a valid password'),
+  check('confirmPassword')
+    .isString()
+    .notEmpty()
+    .custom((value, { req }) => {
+      if (value === req.body.newPassword) {
+        return true;
+      }
+      return false;
+    })
+    .withMessage('Passwords do not match'),
+];
+
 export const validate = (req, res, next) => {
   const errors = validationResult(req);
   if (errors.isEmpty()) {

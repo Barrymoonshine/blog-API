@@ -4,10 +4,12 @@ import {
   user_sign_up,
   user_log_in,
   user_update_username,
+  user_update_password,
 } from '../controllers/userController.js';
 import {
   usernamePasswordValidation,
   confPasswordValidation,
+  updatePasswordValidation,
   validate,
 } from '../middleware/validator.js';
 import verifyToken from '../middleware/verifyToken.js';
@@ -36,7 +38,7 @@ routes.post(
 );
 
 routes.patch(
-  '/',
+  '/username',
   usernamePasswordValidation(),
   validate,
   verifyCredentials,
@@ -44,10 +46,13 @@ routes.patch(
   user_update_username
 );
 
-// Later routes to be added
-
-// routes.get('/my-account', user_get_my_account);
-
-// routes.put('/make-admin', user_put_admin);
+routes.patch(
+  '/password',
+  updatePasswordValidation(),
+  validate,
+  verifyCredentials,
+  verifyToken,
+  user_update_password
+);
 
 export default routes;

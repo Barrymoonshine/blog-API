@@ -5,14 +5,15 @@ import User from '../models/user.js';
 const createToken = (_id) =>
   jwt.sign({ _id }, process.env.SECRET_KEY, { expiresIn: '1d' });
 
+const hashPassword = async (password) => bcrypt.hash(password, 10);
+
 export const user_sign_up = async (req, res) => {
   try {
-    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    const hashedPassword = await hashPassword(req.body.password);
     // Admin status initially false
     const newUser = new User({
       ...req.body,
       password: hashedPassword,
-      isAdmin: false,
     });
     const user = await newUser.save();
     // Does token need to be returned as an object?
@@ -67,6 +68,23 @@ export const user_update_username = async (req, res) => {
       { username: req.body.newUsername }
     );
     res.status(200).json('Username updated');
+  } catch (err) {
+    res
+      .status(500)
+      .json(
+        'An internal server error occurred when sending your request, please try again or report the issue to site maintainer.'
+      );
+  }
+};
+
+export const user_update_password = async (req, res) => {
+  try {
+    const hashedPassword = await hashPassword(req.body.newPassword);
+    await User.findOneAndUpdate(
+      { username: req.body.username },
+      { password: hashedPassword }
+    );
+    res.status(200).json('Password updated');
   } catch (err) {
     res
       .status(500)
