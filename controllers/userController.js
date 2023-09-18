@@ -59,3 +59,19 @@ export const user_authenticate = async (req, res) => {
       );
   }
 };
+
+export const user_update_username = async (req, res) => {
+  try {
+    await User.findOneAndUpdate(
+      { username: req.body.username },
+      { username: req.body.newUsername }
+    );
+    res.status(200).json('Username updated');
+  } catch (err) {
+    res
+      .status(500)
+      .json(
+        'An internal server error occurred when sending your request, please try again or report the issue to site maintainer.'
+      );
+  }
+};

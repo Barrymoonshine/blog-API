@@ -3,6 +3,7 @@ import {
   user_authenticate,
   user_sign_up,
   user_log_in,
+  user_update_username,
 } from '../controllers/userController.js';
 import {
   usernamePasswordValidation,
@@ -32,6 +33,15 @@ routes.post(
   validate,
   verifyCredentials,
   user_log_in
+);
+
+routes.patch(
+  '/',
+  usernamePasswordValidation(),
+  validate,
+  verifyCredentials,
+  verifyToken,
+  user_update_username
 );
 
 // Later routes to be added
