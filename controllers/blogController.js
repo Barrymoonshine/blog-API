@@ -24,7 +24,8 @@ export const create_blog = async (req, res) => {
       image: req.file.path,
     });
     await blog.save();
-    res.json('Success, blog saved!');
+    const newBlogs = await Blog.find();
+    res.json(newBlogs);
   } catch (err) {
     res.status(500).json({
       error: {
@@ -48,10 +49,12 @@ export const get_single_blog = async (req, res) => {
 export const delete_blog = async (req, res) => {
   try {
     await Blog.findByIdAndDelete(req.params.id);
-    res.status(200).json({
-      message: `Blog ${req.params.id} deleted`,
-    });
+    res.status(200).json('Blog deleted');
   } catch (err) {
-    console.log(err);
+    res
+      .status(500)
+      .json(
+        'There was an error with deleting your blog, please try again or if the issue persists contact the site admin',
+      );
   }
 };

@@ -86,7 +86,7 @@ export const updatePasswordValidation = () => [
     .notEmpty()
     .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,20}$/)
     .withMessage('Please enter a valid password'),
-  check('confirmPassword')
+  check('confirmNewPassword')
     .isString()
     .notEmpty()
     .custom((value, { req }) => {
