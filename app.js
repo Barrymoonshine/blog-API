@@ -6,6 +6,7 @@ import blogRoutes from './routes/blogRoutes.js';
 import userRoutes from './routes/userRoutes.js';
 import commentRoutes from './routes/commentRoutes.js';
 import likeRoutes from './routes/likeRoutes.js';
+import authRoutes from './routes/authRoutes.js';
 
 const app = express();
 
@@ -32,7 +33,9 @@ app.use(
     allowedHeaders: ['Content-Type', 'Authorization'],
   })
 );
+
 app.use('/blogs', blogRoutes);
 app.use('/user', userRoutes);
 app.use('/comments', commentRoutes);
 app.use('/like', likeRoutes);
+app.use('/auth', authRoutes);

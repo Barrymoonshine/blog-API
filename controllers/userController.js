@@ -1,38 +1,7 @@
-import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
 import User from '../models/user.js';
+import { createToken, hashPassword } from '../helpers/helpers.js';
 
-const createToken = (_id) =>
-  jwt.sign({ _id }, process.env.SECRET_KEY, { expiresIn: '1d' });
-
-const hashPassword = async (password) => bcrypt.hash(password, 10);
-
-export const user_sign_up = async (req, res) => {
-  try {
-    const hashedPassword = await hashPassword(req.body.password);
-
-    const newUser = new User({
-      ...req.body,
-      password: hashedPassword,
-    });
-    const user = await newUser.save();
-
-    const token = createToken(user._id);
-
-    res.json({ token });
-  } catch (err) {
-    res.status(500).json({
-      error: {
-        code: 'INTERNAL_SERVER_ERROR',
-        message:
-          'An internal server error occurred when processing your request, please try again or report the issue to site maintainer.',
-        err,
-      },
-    });
-  }
-};
-
-export const user_log_in = async (req, res) => {
+export const log_in = async (req, res) => {
   try {
     const token = createToken(req.user._id);
     // Does token need to be returned as an object?
@@ -46,19 +15,7 @@ export const user_log_in = async (req, res) => {
   }
 };
 
-export const user_authenticate = async (req, res) => {
-  try {
-    res.status(200).json('User authenticated');
-  } catch (err) {
-    res
-      .status(500)
-      .json(
-        'An internal server error occurred when processing your request, please try again or report the issue to site maintainer.'
-      );
-  }
-};
-
-export const user_update_username = async (req, res) => {
+export const update_username = async (req, res) => {
   try {
     await User.findOneAndUpdate(
       { username: req.body.username },
@@ -74,7 +31,7 @@ export const user_update_username = async (req, res) => {
   }
 };
 
-export const user_update_password = async (req, res) => {
+export const update_password = async (req, res) => {
   try {
     const hashedPassword = await hashPassword(req.body.newPassword);
     await User.findOneAndUpdate(
