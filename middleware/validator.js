@@ -42,24 +42,6 @@ export const commentFormValidation = () => [
     .withMessage('Please provide a comment'),
 ];
 
-export const likeFormValidation = () => [
-  check('username')
-    .isString()
-    .notEmpty()
-    .withMessage('Please log in to like this blog '),
-];
-
-export const likeBlogValidation = () => [
-  check('username')
-    .isString()
-    .notEmpty()
-    .withMessage('Please provide a username to like this blog '),
-  check('blogID')
-    .isString()
-    .notEmpty()
-    .withMessage('Please provide the blog ID to like this blog  '),
-];
-
 export const likeValidation = () => [
   check('username')
     .isString()

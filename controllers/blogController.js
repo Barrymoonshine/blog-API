@@ -18,7 +18,6 @@ export const get_all_blogs = async (req, res) => {
 
 export const create_blog = async (req, res) => {
   try {
-    // Get the author from the JWT?
     const blog = new Blog({
       ...req.body,
       image: req.file.path,
@@ -27,13 +26,11 @@ export const create_blog = async (req, res) => {
     const newBlogs = await Blog.find();
     res.json(newBlogs);
   } catch (err) {
-    res.status(500).json({
-      error: {
-        code: 'INTERNAL_SERVER_ERROR',
-        message: 'Adsdfsdfsdfsdfsdfsdsdfsdfsdfsdfdsfr.',
-        err,
-      },
-    });
+    res
+      .status(500)
+      .json(
+        'An internal server error occurred when sending your request, please try again or report the issue to site maintainer.'
+      );
   }
 };
 
@@ -65,12 +62,31 @@ export const update_published = async (req, res) => {
       { _id: req.body.id },
       { published: req.body.published }
     );
-    res.status(200).json('Blog published property updated');
+    res.send('Blog published updated');
   } catch (err) {
     res
       .status(500)
       .json(
-        'There was an error with updating your blog, please try again or if the issue persists contact the site admin'
+        'There was an error with updating your blog, please try again or if the issue persists contact the site admin.'
+      );
+  }
+};
+
+export const update_blog = async (req, res) => {
+  try {
+    const updatedBlog = {
+      ...req.body,
+      image: req.file.path,
+    };
+
+    await Blog.findOneAndUpdate({ author: updatedBlog.author }, updatedBlog);
+    const newBlogs = await Blog.find();
+    res.json(newBlogs);
+  } catch (err) {
+    res
+      .status(500)
+      .json(
+        'There was an error with updating your blog, please try again or if the issue persists contact the site admin.'
       );
   }
 };

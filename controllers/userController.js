@@ -10,13 +10,13 @@ const hashPassword = async (password) => bcrypt.hash(password, 10);
 export const user_sign_up = async (req, res) => {
   try {
     const hashedPassword = await hashPassword(req.body.password);
-    // Admin status initially false
+
     const newUser = new User({
       ...req.body,
       password: hashedPassword,
     });
     const user = await newUser.save();
-    // Does token need to be returned as an object?
+
     const token = createToken(user._id);
 
     res.json({ token });
@@ -25,7 +25,7 @@ export const user_sign_up = async (req, res) => {
       error: {
         code: 'INTERNAL_SERVER_ERROR',
         message:
-          'An internal server error occurred when sending your request, please try again or report the issue to site maintainer.',
+          'An internal server error occurred when processing your request, please try again or report the issue to site maintainer.',
         err,
       },
     });
@@ -38,14 +38,11 @@ export const user_log_in = async (req, res) => {
     // Does token need to be returned as an object?
     res.json({ token });
   } catch (err) {
-    res.status(500).json({
-      error: {
-        code: 'INTERNAL_SERVER_ERROR',
-        message:
-          'An internal server error occurred when sending your request, please try again or report the issue to site maintainer.',
-        err,
-      },
-    });
+    res
+      .status(500)
+      .json(
+        'An internal server error occurred when processing your request, please try again or report the issue to site maintainer.'
+      );
   }
 };
 
@@ -56,7 +53,7 @@ export const user_authenticate = async (req, res) => {
     res
       .status(500)
       .json(
-        'An internal server error occurred when sending your request, please try again or report the issue to site maintainer.'
+        'An internal server error occurred when processing your request, please try again or report the issue to site maintainer.'
       );
   }
 };
@@ -72,7 +69,7 @@ export const user_update_username = async (req, res) => {
     res
       .status(500)
       .json(
-        'An internal server error occurred when sending your request, please try again or report the issue to site maintainer.'
+        'An internal server error occurred when processing your request, please try again or report the issue to site maintainer.'
       );
   }
 };
@@ -89,7 +86,7 @@ export const user_update_password = async (req, res) => {
     res
       .status(500)
       .json(
-        'An internal server error occurred when sending your request, please try again or report the issue to site maintainer.'
+        'An internal server error occurred when processing your request, please try again or report the issue to site maintainer.'
       );
   }
 };

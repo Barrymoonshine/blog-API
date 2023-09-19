@@ -4,15 +4,12 @@ export const get_all_likes = async (req, res) => {
   try {
     const likes = await Like.find();
     res.json(likes);
-  } catch (err) {
-    res.status(500).json({
-      error: {
-        code: 'INTERNAL_SERVER_ERROR',
-        message:
-          'An internal server error occurred when sending your request, please try again or report the issue to site maintainer.',
-        err,
-      },
-    });
+  } catch {
+    res
+      .status(500)
+      .json(
+        'An internal server error occurred when processing your request, please try again or report the issue to site maintainer.'
+      );
   }
 };
 
@@ -22,13 +19,11 @@ export const like_doc = async (req, res) => {
     await like.save();
     const likes = await Like.find();
     res.json(likes);
-  } catch (err) {
-    res.status(500).json({
-      error: {
-        code: 'INTERNAL_SERVER_ERROR',
-        message: 'Adsdfsdfsdfsdfsdfsdsdfsdfsdfsdfdsfr.',
-        err,
-      },
-    });
+  } catch {
+    res
+      .status(500)
+      .json(
+        'An internal server error occurred when processing your request, please try again or report the issue to site maintainer.'
+      );
   }
 };
