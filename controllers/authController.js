@@ -14,22 +14,19 @@ export const create = async (req, res) => {
     const token = createToken(user._id);
 
     res.json({ token });
-  } catch (err) {
-    res.status(500).json({
-      error: {
-        code: 'INTERNAL_SERVER_ERROR',
-        message:
-          'An internal server error occurred when processing your request, please try again or report the issue to site maintainer.',
-        err,
-      },
-    });
+  } catch {
+    res
+      .status(500)
+      .json(
+        'An internal server error occurred when processing your request, please try again or report the issue to site maintainer.'
+      );
   }
 };
 
 export const authenticate = async (req, res) => {
   try {
     res.status(200).json('User authenticated');
-  } catch (err) {
+  } catch {
     res
       .status(500)
       .json(
