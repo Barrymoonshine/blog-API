@@ -54,7 +54,23 @@ export const delete_blog = async (req, res) => {
     res
       .status(500)
       .json(
-        'There was an error with deleting your blog, please try again or if the issue persists contact the site admin',
+        'There was an error with deleting your blog, please try again or if the issue persists contact the site admin'
+      );
+  }
+};
+
+export const update_published = async (req, res) => {
+  try {
+    await Blog.findOneAndUpdate(
+      { _id: req.body.id },
+      { published: req.body.published }
+    );
+    res.status(200).json('Blog published property updated');
+  } catch (err) {
+    res
+      .status(500)
+      .json(
+        'There was an error with updating your blog, please try again or if the issue persists contact the site admin'
       );
   }
 };

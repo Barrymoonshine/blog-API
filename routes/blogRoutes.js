@@ -4,6 +4,7 @@ import {
   create_blog,
   get_single_blog,
   delete_blog,
+  update_published,
 } from '../controllers/blogController.js';
 import upload from '../middleware/multer.js';
 import {
@@ -29,5 +30,7 @@ router.post(
 router.get('/:id', verifyToken, get_single_blog);
 
 router.delete('/:id', verifyToken, delete_blog);
+
+router.patch('/', verifyToken, update_published);
 
 export default router;
