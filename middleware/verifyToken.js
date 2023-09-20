@@ -25,7 +25,6 @@ const verifyToken = (req, res, next) => {
             'Your request was not authorised, please log in or sign up to continue'
           );
       } else {
-        // Next
         next();
       }
     });

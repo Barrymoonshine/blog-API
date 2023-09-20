@@ -37,7 +37,7 @@ export const create_blog = async (req, res) => {
 export const get_single_blog = async (req, res) => {
   try {
     const blog = await Blog.findById(req.params.id);
-    res.send(blog);
+    res.json(blog);
   } catch (err) {
     console.log(err);
   }
@@ -46,7 +46,7 @@ export const get_single_blog = async (req, res) => {
 export const delete_blog = async (req, res) => {
   try {
     await Blog.findByIdAndDelete(req.params.id);
-    res.status(200).json('Blog deleted');
+    res.json('Blog deleted');
   } catch (err) {
     res
       .status(500)

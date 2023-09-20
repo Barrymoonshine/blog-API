@@ -4,7 +4,6 @@ import { createToken, hashPassword } from '../helpers/helpers.js';
 export const log_in = async (req, res) => {
   try {
     const token = createToken(req.user._id);
-    // Does token need to be returned as an object?
     res.json({ token });
   } catch (err) {
     res
@@ -21,7 +20,7 @@ export const update_username = async (req, res) => {
       { username: req.body.username },
       { username: req.body.newUsername }
     );
-    res.status(200).json('Username updated');
+    res.json('Username updated');
   } catch (err) {
     res
       .status(500)
@@ -38,7 +37,7 @@ export const update_password = async (req, res) => {
       { username: req.body.username },
       { password: hashedPassword }
     );
-    res.status(200).json('Password updated');
+    res.json('Password updated');
   } catch (err) {
     res
       .status(500)

@@ -25,7 +25,7 @@ export const create = async (req, res) => {
 
 export const authenticate = async (req, res) => {
   try {
-    res.status(200).json('User authenticated');
+    res.json('User authenticated');
   } catch {
     res
       .status(500)
