@@ -11,9 +11,7 @@ const checkDuplicateLike = async (req, res, next) => {
       const likes = await Like.find();
       res.json(likes);
     } catch (err) {
-      res
-        .status(500)
-        .json({ error: 'Internal Server Error', errorDetails: err });
+      res.status(500).json('Internal Server Error');
     }
   } else {
     next();
