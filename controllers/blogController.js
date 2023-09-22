@@ -4,7 +4,7 @@ export const get_all_blogs = async (req, res) => {
   try {
     const blogs = await Blog.find().sort({ createdAt: -1 });
     res.send(blogs);
-  } catch (err) {
+  } catch {
     res.status(500).json({
       error: {
         code: 'INTERNAL_SERVER_ERROR',
@@ -38,8 +38,12 @@ export const get_single_blog = async (req, res) => {
   try {
     const blog = await Blog.findById(req.params.id);
     res.json(blog);
-  } catch (err) {
-    console.log(err);
+  } catch {
+    res
+      .status(500)
+      .json(
+        'There was an error with deleting your blog, please try again or if the issue persists contact the site admin'
+      );
   }
 };
 
@@ -47,7 +51,7 @@ export const delete_blog = async (req, res) => {
   try {
     await Blog.findByIdAndDelete(req.params.id);
     res.json('Blog deleted');
-  } catch (err) {
+  } catch {
     res
       .status(500)
       .json(
@@ -63,7 +67,7 @@ export const update_published = async (req, res) => {
       { published: req.body.published }
     );
     res.send('Blog published updated');
-  } catch (err) {
+  } catch {
     res
       .status(500)
       .json(
@@ -82,7 +86,7 @@ export const update_blog = async (req, res) => {
     await Blog.findOneAndUpdate({ author: updatedBlog.author }, updatedBlog);
     const newBlogs = await Blog.find();
     res.json(newBlogs);
-  } catch (err) {
+  } catch {
     res
       .status(500)
       .json(
