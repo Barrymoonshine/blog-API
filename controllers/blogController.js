@@ -2,8 +2,8 @@ import Blog from '../models/blog.js';
 
 export const get_all_blogs = async (req, res) => {
   try {
-    const blogs = await Blog.find().sort({ createdAt: -1 });
-    res.send(blogs);
+    // const blogs = await Blog.find().sort({ createdAt: -1 });
+    res.status(200).send('get all blogs called');
   } catch {
     res.status(500).json({
       error: {
