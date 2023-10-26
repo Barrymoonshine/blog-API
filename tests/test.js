@@ -47,6 +47,8 @@ const createTestBlogs = async () => {
 describe('Blog route tests', () => {
   let blogA;
   let blogB;
+  // Create token with test id value
+  const token = createToken(1);
   // Tests set up
   before(async () => {
     await initMongoServer();
@@ -71,8 +73,19 @@ describe('Blog route tests', () => {
     const res = await chai
       .request(app)
       .get(`/blogs/${blogA._id}`)
-      .set({ Authorization: `Bearer ${createToken(1)}` });
+      .set({ Authorization: `Bearer ${token}` });
     res.should.have.status(200);
     res.body.should.have.property('title', 'Test blog A');
+  });
+
+  it('should return a string confirming blog published updated when calling PATCH /blogs', async () => {
+    const res = await chai
+      .request(app)
+      .patch('/blogs')
+      .set({ Authorization: `Bearer ${token}` })
+      .send({ id: blogA._id, published: false });
+
+    res.should.have.status(200);
+    res.text.should.deep.include('Blog published updated');
   });
 });
