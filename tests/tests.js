@@ -142,4 +142,21 @@ describe('User route tests', () => {
     const match = await bcrypt.compare('NewPassword!234', res.body.password);
     match.should.be.true;
   });
+
+  it('should update username if password correct when calling PATCH /user/username', async () => {
+    const res = await chai
+      .request(app)
+      .patch('/user/username')
+      .set({
+        Authorization: `Bearer ${token}`,
+        'content-type': 'application/json',
+      })
+      .send({
+        username: 'Test',
+        password: 'NewPassword!234',
+        newUsername: '<3 Tests',
+      });
+    res.should.have.status(200);
+    res.body.should.have.property('username', '<3 Tests');
+  });
 });

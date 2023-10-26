@@ -16,11 +16,12 @@ export const log_in = async (req, res) => {
 
 export const update_username = async (req, res) => {
   try {
-    await User.findOneAndUpdate(
+    const user = await User.findOneAndUpdate(
       { username: req.body.username },
-      { username: req.body.newUsername }
+      { username: req.body.newUsername },
+      { new: true }
     );
-    res.json('Username updated');
+    res.json(user);
   } catch (err) {
     res
       .status(500)
