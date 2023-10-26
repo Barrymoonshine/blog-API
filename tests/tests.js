@@ -1,6 +1,7 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import express from 'express';
+import bcrypt from 'bcryptjs';
 import blogRoutes from '../routes/blogRoutes.js';
 import userRoutes from '../routes/userRoutes.js';
 import initMongoServer from '../mongoConfigs/mongoTestConfig.js';
@@ -11,6 +12,10 @@ import 'dotenv/config';
 
 const app = express();
 const should = chai.should();
+// Global variables for use in multiple test blocks
+let blogA;
+let blogB;
+const token = createToken(1);
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -54,10 +59,6 @@ const createTestUser = async () => {
   return testUser;
 };
 
-// Global variable used for blogA and B use in blog test block, note: refactor to restrict access
-let blogA;
-let blogB;
-
 // Tests set up
 before(async () => {
   await initMongoServer();
@@ -72,9 +73,6 @@ before(async () => {
 });
 
 describe('Blog route tests', () => {
-  // Create token with test id value
-  const token = createToken(1);
-
   it('should return a list of blogs ordered by latest first when calling GET /blogs', async () => {
     const res = await chai.request(app).get('/blogs');
     res.should.have.status(200);
@@ -114,5 +112,34 @@ describe('User route tests', () => {
 
     res.should.have.status(200);
     res.body.should.have.property('token');
+  });
+
+  it('should log not log user in when password is incorrect when calling POST /user', async () => {
+    const res = await chai
+      .request(app)
+      .post('/user')
+      .set({ 'content-type': 'application/json' })
+      .send({ username: 'Test', password: 'Password!235' });
+    res.should.have.status(401);
+    res.text.should.deep.include('Password not valid');
+  });
+
+  it('should update password if password correct when calling PATCH /user/password', async () => {
+    const res = await chai
+      .request(app)
+      .patch('/user/password')
+      .set({
+        Authorization: `Bearer ${token}`,
+        'content-type': 'application/json',
+      })
+      .send({
+        username: 'Test',
+        password: 'Password!234',
+        newPassword: 'NewPassword!234',
+        confirmNewPassword: 'NewPassword!234',
+      });
+    res.should.have.status(200);
+    const match = await bcrypt.compare('NewPassword!234', res.body.password);
+    match.should.be.true;
   });
 });

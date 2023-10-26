@@ -33,11 +33,12 @@ export const update_username = async (req, res) => {
 export const update_password = async (req, res) => {
   try {
     const hashedPassword = await hashPassword(req.body.newPassword);
-    await User.findOneAndUpdate(
+    const user = await User.findOneAndUpdate(
       { username: req.body.username },
-      { password: hashedPassword }
+      { password: hashedPassword },
+      { new: true }
     );
-    res.json('Password updated');
+    res.json(user);
   } catch (err) {
     res
       .status(500)
