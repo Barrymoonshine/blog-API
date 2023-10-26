@@ -4,6 +4,8 @@ import express from 'express';
 import blogRoutes from '../routes/blogRoutes.js';
 import initMongoServer from '../mongoConfigs/mongoTestConfig.js';
 import Blog from '../models/blog.js';
+import { createToken } from '../helpers/helpers.js';
+import 'dotenv/config';
 
 const app = express();
 const should = chai.should();
@@ -42,26 +44,35 @@ const createTestBlogs = async () => {
   return [blogA, blogB];
 };
 
-// Tests set up
-before(async () => {
-  await initMongoServer();
-  app.listen(3000, () => {
-    console.log('Server is running on port 3000');
+describe('Blog route tests', () => {
+  let blogA;
+  let blogB;
+  // Tests set up
+  before(async () => {
+    await initMongoServer();
+    app.listen(3000, () => {
+      console.log('Server is running on port 3000');
+    });
+
+    [blogA, blogB] = await createTestBlogs();
+
+    await Promise.all([blogA.save(), blogB.save()]);
   });
 
-  const [blogA, blogB] = await createTestBlogs();
-
-  await Promise.all([blogA.save(), blogB.save()]);
-});
-
-describe('Blog route tests', () => {
-  it('should return a list of blogs when calling GET /blogs', async () => {
+  it('should return a list of blogs ordered by latest first when calling GET /blogs', async () => {
     const res = await chai.request(app).get('/blogs');
-    console.log('res', res);
-
     res.should.have.status(200);
     res.body.should.be.an('array');
-    // res.body.should.deep.include({ title: 'Test blog A' });
-    // res.body.should.deep.include({ title: 'Test blog B' });
+    // Latest first
+    res.body[0].should.have.property('title', 'Test blog B');
+  });
+
+  it('should return specific blog when calling GET /blogs/:id', async () => {
+    const res = await chai
+      .request(app)
+      .get(`/blogs/${blogA._id}`)
+      .set({ Authorization: `Bearer ${createToken(1)}` });
+    res.should.have.status(200);
+    res.body.should.have.property('title', 'Test blog A');
   });
 });
