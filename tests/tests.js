@@ -159,4 +159,22 @@ describe('User route tests', () => {
     res.should.have.status(200);
     res.body.should.have.property('username', '<3 Tests');
   });
+
+  it('should not update password if password is invalid when calling PATCH /user/password', async () => {
+    const res = await chai
+      .request(app)
+      .patch('/user/password')
+      .set({
+        Authorization: `Bearer ${token}`,
+        'content-type': 'application/json',
+      })
+      .send({
+        username: '<3 Tests',
+        password: 'Password!99999',
+        newPassword: 'Hack3dP455w4rd!',
+        confirmNewPassword: 'Hack3dP455w4rd!',
+      });
+    res.should.have.status(401);
+    res.text.should.deep.include('Password not valid');
+  });
 });
